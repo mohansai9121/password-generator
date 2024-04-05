@@ -49,3 +49,11 @@
   text-shadow: 2px 2px 5px grey;
   font-size: large;
 }
+.passwordListing{
+  border: 2px solid darkgreen;
+  background-color: beige;
+  padding: 5px;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 10px;
+}
