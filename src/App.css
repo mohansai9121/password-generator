@@ -32,3 +32,20 @@
   border: green;
   box-shadow: 3px 5px 10px gray;
 }
+.scrolling{
+  transform: translateX(100%);
+  animation: scrolling 15s linear infinite;
+  overflow: hidden;
+}
+@keyframes scrolling{
+  from{
+    transform: translateX(50%);
+  }
+  to{
+    transform: translateX(-100%);
+  }
+}
+.text-shadow{
+  text-shadow: 2px 2px 5px grey;
+  font-size: large;
+}
