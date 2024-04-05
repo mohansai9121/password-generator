@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaCopy } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import {IconButton} from 'rsuite';
+import {toast} from 'react-hot-toast'
 const App = () => {
   let capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   let smallLetters = "abcdefghijklmnopqrstuvwxyz"
@@ -44,16 +45,25 @@ const App = () => {
       characters += symbols
     }
     console.log(characters)
-    let password = ""
-    for(let i=0; i<length; i++){
-      let index = Math.floor(Math.random()*characters.length)
-      password += characters[index]
+    if(capitals || smalls || nums || specialChars){
+      let password = ""
+      for(let i=0; i<length; i++){
+        let index = Math.floor(Math.random()*characters.length)
+        password += characters[index]
+      }
+      setNewPassword(password)
+      let p = [...passwordsList]
+      p.push(password)
+      setPasswordsList(p)
+      localStorage.setItem("passwords",JSON.stringify(p))
+      setCapitals(false)
+      setSmalls(false)
+      setNums(false)
+      setSpecialChars(false)
     }
-    setNewPassword(password)
-    let p = [...passwordsList]
-    p.push(password)
-    setPasswordsList(p)
-    localStorage.setItem("passwords",JSON.stringify(p))
+    else{
+      toast.error("Please select atleast one of the check-boxes")
+    }
   }
   const deleteHandler = (idx)=>{
     let pws = [...passwordsList]
@@ -61,8 +71,14 @@ const App = () => {
     setPasswordsList(pws)
     localStorage.setItem("passwords", JSON.stringify(pws))
   }
-  const copy = ()=>{
-    navigator.clipboard.writeText(newPassword)
+  const copy = async()=>{
+    if(newPassword){
+      await navigator.clipboard.writeText(newPassword)
+      toast.success("Password copied Successfully!!")
+    }
+    else{
+      toast.error("Err-No password to Copy!!")
+    }
   }
   useEffect(()=>{
     let savedPasswords = JSON.parse(localStorage.getItem("passwords"))
