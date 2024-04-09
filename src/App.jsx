@@ -2,13 +2,14 @@
 import { useEffect, useState } from "react";
 import { FaCopy } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import {IconButton} from 'rsuite';
-import {toast} from 'react-hot-toast'
+import {IconButton,Button} from 'rsuite';
+import {toast} from 'react-hot-toast';
+
 const App = () => {
   let capitalLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   let smallLetters = "abcdefghijklmnopqrstuvwxyz"
   let numbers = "0123456789"
-  let symbols = "!@#$%^&*()-_+[]{}|?/><"
+  let symbols = "!@#$%^&*()-_+[]{}|?/><="
   let characters = ""
   //const [allCharacters, setAllCharacters] = useState("")
   const [capitals,setCapitals] = useState(false)
@@ -18,6 +19,12 @@ const App = () => {
   const [length, setLength] = useState(6)
   const [newPassword, setNewPassword] = useState("")
   const [passwordsList, setPasswordsList] = useState([])
+  const [checkPassword, setCheckPassword] = useState("")
+  const [ strong, setStrong ] = useState(false)
+  const [isCapital, setIsCapital] = useState(false)
+  const [ isSmall, setIsSmall] = useState(false)
+  const [ isNumber, setIsNumber] = useState(false)
+  const [ isSymbol, setIsSymbol] = useState(false)
   const capitalHandler = ()=>{
     setCapitals(true)
   }
@@ -30,7 +37,41 @@ const App = () => {
   const specialCharHandler = ()=>{
     setSpecialChars(true)
   }
-  console.log(length)
+  const strongPassword = ()=>{
+    for(let i=0;i<checkPassword.length;i++){
+      if(capitalLetters.includes(checkPassword[i])){
+        setIsCapital(true)
+      }
+    }
+    for(let i=0;i<checkPassword.length;i++){
+      if(smallLetters.includes(checkPassword[i])){
+        setIsSmall(true)
+      }
+    }
+    for(let i=0;i<checkPassword.length;i++){
+      if(numbers.includes(checkPassword[i])){
+        setIsNumber(true)
+      }
+    }
+    for(let i=0;i<checkPassword.length;i++){
+      if(symbols.includes(checkPassword[i])){
+        setIsSymbol(true)
+      }
+    }
+  }
+  const refresh=()=>{
+    setIsCapital(false)
+    setIsSmall(false)
+    setIsNumber(false)
+    setIsSymbol(false)
+    setCheckPassword("")
+    setStrong(false)
+  }
+  useEffect(()=>{
+    if(isCapital && isSmall && isNumber &&isSymbol && checkPassword.length>5){
+      setStrong(true)
+    }
+  },[isCapital,isSmall,isNumber,isSymbol,checkPassword])
   const passwordGeneration = ()=>{
     if(capitals){
       characters += capitalLetters
@@ -116,6 +157,13 @@ const App = () => {
         </div>
         <button className="submitButton" onClick={passwordGeneration}>Generate Password</button>
       </div><br></br>
+      <div className="check_strong">
+        <span>Check whether the password is strong or not</span><br/>
+        <input type="text" value={checkPassword} onChange={(e)=>{setCheckPassword(e.target.value)}}/>{" "}
+        <button onClick={refresh}>Refresh</button>
+        <Button appearance="primary" className="submitButton" onClick={strongPassword}>Check</Button><br></br>
+        <p>{strong?<span style={{color:'green'}}>Strong password</span>:<span style={{color:'red'}}>Not a strong password</span>}</p>
+      </div>
       <h3>Generated Passwords are:</h3>
       <div>{passwordsList && passwordsList.map((password, index)=>{
         return(
