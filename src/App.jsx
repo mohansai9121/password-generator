@@ -58,6 +58,7 @@ const App = () => {
         setIsSymbol(true)
       }
     }
+
   }
   const refresh=()=>{
     setIsCapital(false)
@@ -135,6 +136,7 @@ const App = () => {
         <span style={{backgroundColor:'orange', borderRadius:'5px', padding:'5px', fontSize:'large'}}>Strong Password generator</span><br/><br></br>
         <input type="text" readOnly placeholder="Password appears here..." value={newPassword} style={{borderRadius:'5px'}}/>
         <IconButton appearance="ghost" icon={<FaCopy/>} title="Copy" onClick={copy}/>
+        <p style={{color:'#2C3EF8'}}>Copy above password here ^</p>
         <div style={{margin:'10px'}}>
           <label htmlFor="number">Password length:</label>
           <input type="number" id="number" min={6} max={25} placeholder=">5" value={length} onChange={(e)=>setLength(e.target.value)}/>
@@ -156,13 +158,19 @@ const App = () => {
           <input type="checkbox" id="symbols" checked={specialChars} onChange={specialCharHandler}/>
         </div>
         <button className="submitButton" onClick={passwordGeneration}>Generate Password</button>
-      </div><br></br>
+      </div>
+      <p><b>Strong passwords must contain:</b></p>
+      <p>-Minimum length of 6</p>
+      <p>-Atleast one Capital letter</p>
+      <p>-Atleast one small letter</p>
+      <p>-Atleast one Special Character</p>
       <div className="check_strong">
-        <span>Check whether the password is strong or not</span><br/>
-        <input type="text" value={checkPassword} onChange={(e)=>{setCheckPassword(e.target.value)}}/>{" "}
-        <button onClick={refresh}>Refresh</button>
-        <Button appearance="primary" className="submitButton" onClick={strongPassword}>Check</Button><br></br>
-        <p>{strong?<span style={{color:'green'}}>Strong password</span>:<span style={{color:'red'}}>Not a strong password</span>}</p>
+        <span style={{ fontSize:'20px'}}><b>Check whether the password is strong or not</b></span><br/><hr></hr><br/>
+        <input type="text" value={checkPassword} onChange={(e)=>{setCheckPassword(e.target.value)}} placeholder="Enter Password here..."/>{" "}
+        <Button appearance="primary" className="submitButton" onClick={strongPassword}>Check</Button>{" "}
+        <button onClick={refresh} style={{backgroundColor:'#59DCF7'}} className="refresh">Refresh</button><br></br>
+        {checkPassword?<p>{strong?<span style={{color:'green'}}>Strong password</span>:<span style={{color:'red'}}>Not a Strong password</span>}</p>:<span></span>}
+        <p style={{color:'red'}}>Note:Please refresh before checking for other password</p>
       </div>
       <h3>Generated Passwords are:</h3>
       <div>{passwordsList && passwordsList.map((password, index)=>{

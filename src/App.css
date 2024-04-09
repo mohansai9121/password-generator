@@ -67,3 +67,8 @@
   box-shadow: 0px 0px 7px gray;
   padding: 5px;
 }
+.refresh:hover{
+  border: 2px solid #59DCF7;
+  box-shadow: 0px 0px 15px gray;
+  border-radius: 5px;
+}
