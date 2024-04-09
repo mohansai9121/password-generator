@@ -169,7 +169,7 @@ const App = () => {
         <input type="text" value={checkPassword} onChange={(e)=>{setCheckPassword(e.target.value)}} placeholder="Enter Password here..."/>{" "}
         <Button appearance="primary" className="submitButton" onClick={strongPassword}>Check</Button>{" "}
         <button onClick={refresh} style={{backgroundColor:'#59DCF7'}} className="refresh">Refresh</button><br></br>
-        {checkPassword?<p>{strong?<span style={{color:'green'}}>Strong password</span>:<span style={{color:'red'}}>Not a Strong password</span>}</p>:<span></span>}
+        {checkPassword?<p>{strong?<span style={{color:'green'}}><b>Strong password</b></span>:<span style={{color:'red'}}>!....</span>}</p>:<span></span>}
         <p style={{color:'red'}}>Note:Please refresh before checking for other password</p>
       </div>
       <h3>Generated Passwords are:</h3>
